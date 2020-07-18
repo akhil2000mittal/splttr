@@ -65,6 +65,15 @@ class _RegisterUserState extends State<RegisterUser> {
     _repasswordController.dispose();
   }
 
+  Future<bool> checkUsernameExists(String value) async {
+    var userNames = await getUserNames();
+    if (!userNames.contains(value)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void processUserData() async {
     validUserName = await checkUsernameExists(_usernameController.text);
     if (!validUserName) {
@@ -89,15 +98,6 @@ class _RegisterUserState extends State<RegisterUser> {
 
       registerUser(newuser)
           .then((_) => Navigator.popUntil(context, ModalRoute.withName('/')));
-    }
-  }
-
-  Future<bool> checkUsernameExists(String value) async {
-    var userNames = await getUserNames();
-    if (!userNames.contains(value)) {
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -148,7 +148,7 @@ class _RegisterUserState extends State<RegisterUser> {
                     validator: (value){
                         if (Validators.validateUserName(value)!=null)
                         {
-                            return Validators.validateUserName(value)
+                            return Validators.validateUserName(value);
                         }
                         else if (!validUserName) {
                              validUserName = true;

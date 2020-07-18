@@ -101,7 +101,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     obscureText: true,
                     validator: (value){
                         if(Validators.validatePassword(value)!=null){
-                            return Validators.validatePassword(value)
+                            return Validators.validatePassword(value);
                         }
                         else  if(!validDetails){
                             validDetails = true;
@@ -109,13 +109,13 @@ class _SigninScreenState extends State<SigninScreen> {
                           }
                           return null;
                         
-                    }
+                    },
                     
                     // validator: ,
                     decoration: TextFieldDecoration.circularBorderDecoration(
                       icon: Icon(Icons.lock),
                       labelText: 'Password',
-                      hintText: 'Try to choose a strong password',
+                      hintText: 'Your password',
                     ),
                   ),
                   SizedBox(height: 20),

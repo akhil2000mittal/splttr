@@ -1,19 +1,26 @@
+import 'package:intl/intl.dart';
 class Group {
   String groupName;
-  String doc;
+  DateTime doc;
+  String groupDec;
+  String avtar;
 
-  Group({this.groupName,this.doc});
+  Group({this.groupName,this.doc,this.groupDec,this.avtar});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'groupName': groupName,
-      'doc': doc
+      'groupDec' : groupDec,
+      'avtar': avtar,
+      'doc': doc.toString()
     };
     return map;
   }
-
+final DateFormat _dateformat = DateFormat('yyyy-MM-dd');
   Group.fromMap(Map<String, dynamic> map) {
     groupName = map['groupName'];
-    doc = map['doc'];
+    groupDec = map['groupDec'];
+    avtar = map['avtar'];
+    doc =_dateformat.parse(map['doc']);
   }
 }

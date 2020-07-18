@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:splttr/res/colors.dart';
 import 'package:splttr/dataPages/user.dart';
 import 'package:splttr/res/avatars.dart';
+import 'package:splttr/pages/profiles/profile_page.dart';
 
 class Menu extends StatelessWidget {
   final User signinedUser;
@@ -18,14 +19,25 @@ class Menu extends StatelessWidget {
           ),
           FlatButton(
             onPressed: () {
-              print('Link to your profile');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => ProfilePage(
+                    tag: 'profile',
+                    signinedUser: signinedUser,
+                  ),
+                ),
+              );
             },
             child: Row(
               children: <Widget>[
-                CircleAvatar(
-                  backgroundColor: PurpleTheme.pinkishPurple,
-                  radius: MediaQuery.of(context).size.width / 8,
-                  child:  Avatars.getAssetFromName(signinedUser.avtar),
+                Hero(
+                  tag: 'profile',
+                  child: CircleAvatar(
+                    backgroundColor: PurpleTheme.pinkishPurple,
+                    radius: MediaQuery.of(context).size.width / 8,
+                    child: Avatars.getAssetFromName(signinedUser.avtar),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -33,7 +45,7 @@ class Menu extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        signinedUser.firstName+" "+signinedUser.lastName,
+                        signinedUser.firstName + " " + signinedUser.lastName,
                         style: Theme.of(context).textTheme.headline5.copyWith(
                               letterSpacing: 2,
                               color: Colors.white,
@@ -62,11 +74,19 @@ class Menu extends StatelessWidget {
             title: 'Search',
           ),
           Divider(),
-          buildTile(
-            context,
-            iconData: FontAwesomeIcons.userAlt,
-            title: 'Your Profile',
-          ),
+          buildTile(context,
+              iconData: FontAwesomeIcons.userAlt,
+              title: 'Your Profile', onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => ProfilePage(
+                  tag: 'profile',
+                  signinedUser: signinedUser,
+                ),
+              ),
+            );
+          }),
           Divider(),
           buildTile(
             context,

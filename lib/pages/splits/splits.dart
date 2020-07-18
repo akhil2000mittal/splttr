@@ -8,6 +8,7 @@ import 'package:splttr/pages/splits/split_description.dart';
 import 'package:splttr/widgets/large_avatar_tile.dart';
 import 'package:splttr/widgets/two_button_row.dart';
 import 'package:splttr/dataPages/user.dart';
+import 'package:splttr/pages/friends/add_group.dart';
 
 class Splits extends StatefulWidget {
   final User signinedUser;
@@ -36,7 +37,14 @@ class _SplitsState extends State<Splits> with AutomaticKeepAliveClientMixin {
             imagePath: 'assets/images/outings.png',
             title: 'Splits',
             buttonRow: TwoButtonRow(
-              buttonOneOnPressed: () {},
+              buttonOneOnPressed: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => AddGroup(signinedUser: signinedUser)
+                ),
+              );
+              },
               buttonOneText: 'Add Group',
               buttonTwoOnPressed: () {},
               buttonTwoText: 'Add split',

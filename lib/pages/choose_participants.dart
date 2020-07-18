@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:splttr/pages/choose_participants_by_group.dart';
 import 'package:splttr/res/avatars.dart';
-import 'package:splttr/res/dummy_data.dart';
+import 'package:splttr/dataPages/user.dart';
 
 class ChooseParticipants extends StatefulWidget {
   final bool enableSelectionByGroup;
-  ChooseParticipants({this.enableSelectionByGroup});
+  final List<User> friendsList;
+  ChooseParticipants({this.enableSelectionByGroup,this.friendsList});
   @override
-  _ChooseParticipantsState createState() => _ChooseParticipantsState();
+  _ChooseParticipantsState createState() => _ChooseParticipantsState(friendsList);
 }
 
 class _ChooseParticipantsState extends State<ChooseParticipants> {
-  List _friendsList = DummyData.friends;
+
+final List<User> _friendsList ;
+  _ChooseParticipantsState(this._friendsList);
+  
+
   List<bool> _friendIsSelected;
   bool isSelected = false;
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +52,9 @@ class _ChooseParticipantsState extends State<ChooseParticipants> {
             textColor: Colors.white,
             icon: Icon(Icons.check),
             label: Text('DONE'),
-            onPressed: () {},
+            onPressed: () {
+              print(_friendIsSelected);
+            },
           ),
         ],
         elevation: 0,
@@ -106,10 +114,10 @@ class _ChooseParticipantsState extends State<ChooseParticipants> {
                               CircleAvatar(
                                 radius: 50,
                                 child: Avatars.getAssetFromName(
-                                    _friendsList[index]['avatar']),
+                                    _friendsList[index].avtar),
                               ),
                               Text(
-                                '@' + _friendsList[index]['username'],
+                                '@' + _friendsList[index].username,
                                 style: Theme.of(context).textTheme.subtitle1,
                               )
                             ],

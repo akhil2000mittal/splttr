@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:splttr/res/dummy_data.dart';
 import 'package:splttr/widgets/app_screen_title_with_image_widget.dart';
 import 'package:splttr/widgets/empty_list_message.dart';
 import 'package:splttr/widgets/small_avatar_tile.dart';
 import 'package:splttr/dataPages/user.dart';
 import 'package:splttr/widgets/two_button_row.dart';
+import 'package:splttr/database/userQuery.dart';
+
+
 
 class Friends extends StatefulWidget {
   final User signinedUser;
@@ -15,13 +17,32 @@ class Friends extends StatefulWidget {
 }
 
 class _FriendsState extends State<Friends> with AutomaticKeepAliveClientMixin {
-  List _friendsList = DummyData.friends;
   final User signinedUser;
+  List<User> _friendsList = [];
+  var db;
   _FriendsState(this.signinedUser);
+
+  getUsers() async{
+    db = UserQuery();
+    var userNamesList;
+    var userDetails;
+    userNamesList = await db.getUserNames();
+    for (int i = 0; i < userNamesList.length; i++) {
+        if(signinedUser.username
+         != userNamesList[i])
+        {userDetails = await db.userDetails(userNamesList[i]);
+        _friendsList.add(userDetails);}
+      }
+    setState(() {
+    });
+  }
+
+
 
   @override
   void initState() {
     super.initState();
+    getUsers();
   }
 
   @override
@@ -54,11 +75,11 @@ class _FriendsState extends State<Friends> with AutomaticKeepAliveClientMixin {
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
           child: SmallAvatarTile(
-            avatar: _friendsList[index]['avatar'],
-            title: _friendsList[index]['firstName'] +
+            avatar: _friendsList[index].avtar,
+            title: _friendsList[index].firstName +
                 ' ' +
-                _friendsList[index]['lastName'],
-            subtitle: _friendsList[index]['username'],
+                _friendsList[index].lastName,
+            subtitle: '@'+_friendsList[index].username,
             actions: <Widget>[
               IconButton(
                 icon: Icon(

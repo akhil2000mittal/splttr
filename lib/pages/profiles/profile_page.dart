@@ -5,13 +5,13 @@ import 'package:splttr/pages/profiles/profile_groups_tab.dart';
 import 'package:splttr/pages/profiles/profile_owes_dues_tab.dart';
 import 'package:splttr/res/avatars.dart';
 import 'package:splttr/widgets/tab_bar_with_background.dart';
+import 'package:splttr/dataPages/user.dart';
 
 
 class ProfilePage extends StatelessWidget {
   final String tag;
-  final String name;
-  final String avatar;
-  ProfilePage({this.tag, this.name, this.avatar});
+  final User signinedUser;
+  ProfilePage({this.tag, this.signinedUser});
   
   @override
   Widget build(BuildContext context) {
@@ -67,14 +67,14 @@ class ProfilePage extends StatelessWidget {
                             Hero(
                               tag: tag,
                               child: CircleAvatar(
-                                child: Avatars.getAssetFromName(avatar),
+                                child: Avatars.getAssetFromName(signinedUser.avtar),
                                 radius: MediaQuery.of(context).size.width / 6,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(16.0),
                               child: Text(
-                                ' $name ',
+                                ' ${signinedUser.firstName} ${signinedUser.lastName}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline5
@@ -86,7 +86,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                                ' @username ',
+                                ' @${signinedUser.username} ',
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle2
